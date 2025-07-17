@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test SAP TM100 - Unidad 1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    h1 {
+      color: #2b4c8a;
+      font-size: 22px;
+      text-align: center;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question p {
+      font-weight: bold;
+    }
+    label {
+      display: block;
+      margin-left: 10px;
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+    button {
+      padding: 12px 24px;
+      background-color: #2b4c8a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+      margin: 30px auto;
+    }
+    button:hover {
+      background-color: #1e3572;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      text-align: center;
+    }
+    .incorrect {
+      color: red;
+    }
+    .correct {
+      color: green;
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 18px;
+      }
+      label {
+        font-size: 15px;
+      }
+      button {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Test de Autoevaluación – SAP TM100 Unidad 1</h1>
+  <form id="quizForm">
+    <div class="question">
+      <p>1. ¿Cuáles son áreas funcionales clave de SAP TM?</p>
+      <label><input type="checkbox" name="q1" value="A"> A. Gestión de almacenes</label>
+      <label><input type="checkbox" name="q1" value="B"> B. Planificación del transporte</label>
+      <label><input type="checkbox" name="q1" value="C"> C. Ejecución del transporte</label>
+      <label><input type="checkbox" name="q1" value="D"> D. Cálculo de cargos y liquidación</label>
+      <label><input type="checkbox" name="q1" value="E"> E. Gestión de pedidos</label>
+    </div>
+    <div class="question">
+      <p>2. ¿Qué grupos objetivos cubre SAP TM?</p>
+      <label><input type="checkbox" name="q2" value="A"> A. Shippers</label>
+      <label><input type="checkbox" name="q2" value="B"> B. Fabricantes de ERP</label>
+      <label><input type="checkbox" name="q2" value="C"> C. LSPs</label>
+      <label><input type="checkbox" name="q2" value="D"> D. Terceros no integrados</label>
+    </div>
+    <div class="question">
+      <p>3. ¿Cuál de los siguientes documentos NO es propio de SAP TM?</p>
+      <label><input type="radio" name="q3" value="A"> A. Freight Unit</label>
+      <label><input type="radio" name="q3" value="B"> B. Freight Order</label>
+      <label><input type="radio" name="q3" value="C"> C. Purchase Order</label>
+      <label><input type="radio" name="q3" value="D"> D. Freight Settlement Document</label>
+    </div>
+    <div class="question">
+      <p>4. ¿Qué herramienta se usa para el seguimiento de eventos logísticos?</p>
+      <label><input type="radio" name="q4" value="A"> A. SAP Fiori</label>
+      <label><input type="radio" name="q4" value="B"> B. SAP Event Management</label>
+      <label><input type="radio" name="q4" value="C"> C. SAP CRM</label>
+      <label><input type="radio" name="q4" value="D"> D. SAP BI</label>
+    </div>
+    <button type="button" onclick="evaluate()">Evaluar respuestas</button>
+  </form>
+  <div id="result"></div>
+</div>
+<script>
+function evaluate() {
+  let score = 0;
+  let feedback = "";
+  const q1Answers = [...document.querySelectorAll('input[name="q1"]:checked')].map(e => e.value);
+  const q1Correct = ["B", "C", "D", "E"];
+  if (arraysEqual(q1Answers.sort(), q1Correct.sort())) score++;
+  else feedback += "<p class='incorrect'>❌ Pregunta 1 incorrecta. Correctas: B, C, D, E</p>";
+  const q2Answers = [...document.querySelectorAll('input[name="q2"]:checked')].map(e => e.value);
+  const q2Correct = ["A", "C"];
+  if (arraysEqual(q2Answers.sort(), q2Correct.sort())) score++;
+  else feedback += "<p class='incorrect'>❌ Pregunta 2 incorrecta. Correctas: A, C</p>";
+  const q3 = document.querySelector('input[name="q3"]:checked');
+  if (q3 && q3.value === "C") score++;
+  else feedback += "<p class='incorrect'>❌ Pregunta 3 incorrecta. Correcta: C</p>";
+  const q4 = document.querySelector('input[name="q4"]:checked');
+  if (q4 && q4.value === "B") score++;
+  else feedback += "<p class='incorrect'>❌ Pregunta 4 incorrecta. Correcta: B</p>";
+  const total = 4;
+  const porcentaje = Math.round((score / total) * 100);
+  const resultHTML = `<p class='${score === total ? 'correct' : 'incorrect'}'>✅ Resultado: ${score}/${total} (${porcentaje}%)</p>${feedback}`;
+  document.getElementById("result").innerHTML = resultHTML;
+}
+function arraysEqual(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+</script>
+</body>
+</html>
